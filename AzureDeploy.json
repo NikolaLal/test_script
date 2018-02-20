@@ -172,6 +172,24 @@
           }
         }
       }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(variables('vmName'),'/newuserscript')]",
+      "apiVersion": "2015-05-01-preview",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "commandToExecute": "curl -u svrbuild:G1tRD0n3 'https://tfs.wkhmr.com/tfs/DefaultCollection/CIBS/_api/_versioncontrol/itemContent?__v=5&repositoryId=10ed1db0-2cc4-4bd6-8a89-30ffe2d4d49b&version=GBmaster&path=/Azure/dsc/ArtifactorySetup.sh' -X GET --insecure --ntlm >> ArtifactorySetup.sh"
+        }
+      }
     }
   ],
   "outputs": {
